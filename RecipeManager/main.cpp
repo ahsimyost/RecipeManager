@@ -2,6 +2,7 @@
 #include <vector>
 #include <string>
 #include <fstream>
+#include <locale.h> 
 
 using namespace std;
 
@@ -24,6 +25,7 @@ void printMenu() {
 }
 
 int main() {
+
     setlocale(LC_ALL, "Russian");
     vector<Recipe> myRecipes;
 
@@ -49,18 +51,18 @@ int main() {
         if (command == "add") {
             string name;
             double cal;
-            cout << "¬ведите название блюда: "; cin >> name;
-            cout << "¬ведите калорийность: "; cin >> cal;
+            cout << "¬ведите название блюда на англ: "; cin >> name;
+            cout << "¬ведите калорийность(цифры!): "; cin >> cal;
             myRecipes.push_back(Recipe(name, cal));
             cout << "”спешно добавлено!" << endl;
         }
         else if (command == "show") {
             cout << "\n¬аши рецепты:" << endl;
-            double totalCalories = 0; // ---счетчик
+            double totalCalories = 0; // ѕеременна€-счетчик
 
             for (size_t i = 0; i < myRecipes.size(); ++i) {
                 cout << i + 1 << ". " << myRecipes[i].name << " Ч " << myRecipes[i].calories << " ккал" << endl;
-                totalCalories += myRecipes[i].calories; // калькулируем калории
+                totalCalories += myRecipes[i].calories; // —кладываем калории
             }
 
             cout << "-------------------------------" << endl;
@@ -84,7 +86,7 @@ int main() {
         }
     }
 
-    // сохпранение рецептоав перед выходом
+    // сохранение рецептоав перед выходом
     ofstream outFile("recipes.txt");
     for (const auto& r : myRecipes) {
         outFile << r.name << " " << r.calories << endl;
