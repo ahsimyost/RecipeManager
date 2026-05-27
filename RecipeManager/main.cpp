@@ -1,10 +1,10 @@
-#include <iostream>
+п»ї#include <iostream>
 #include <vector>
 #include <string>
 #include <fstream>
 
 using namespace std;
-// Класс для хранения данных о блюде 
+// РљР»Р°СЃСЃ РґР»СЏ С…СЂР°РЅРµРЅРёСЏ РґР°РЅРЅС‹С… Рѕ Р±Р»СЋРґРµ 
 
 class Recipe {
 public:
@@ -13,7 +13,7 @@ public:
     Recipe(string n, double c) : name(n), calories(c) {}
 };
 
-//конец
+//РєРѕРЅРµС†
 
 
 int main() {
@@ -23,20 +23,20 @@ int main() {
     string name;
     double cal;
 
-    cout << "--- Калькулятор Калорий ---" << endl;
-    cout << "\nВведите название блюда (или напишите 'bb' для завершения): ";
+    cout << "--- РљР°Р»СЊРєСѓР»СЏС‚РѕСЂ РљР°Р»РѕСЂРёР№ ---" << endl;
+    cout << "\nР’РІРµРґРёС‚Рµ РЅР°Р·РІР°РЅРёРµ Р±Р»СЋРґР° (РёР»Рё РЅР°РїРёС€РёС‚Рµ 'bb' РґР»СЏ Р·Р°РІРµСЂС€РµРЅРёСЏ): ";
     while (true) {
         cin >> name;
-        if (name == "bb") break; // bb из цикла
+        if (name == "bb") break; // bb РёР· С†РёРєР»Р°
 
-        cout << "Введите калорийность: ";
+        cout << "Р’РІРµРґРёС‚Рµ РєР°Р»РѕСЂРёР№РЅРѕСЃС‚СЊ: ";
         cin >> cal;
         myRecipes.push_back(Recipe(name, cal));
-        cout << "\nДобавлено! Введите следующее блюдо или 'bbb': ";
+        cout << "\nР”РѕР±Р°РІР»РµРЅРѕ! Р’РІРµРґРёС‚Рµ СЃР»РµРґСѓСЋС‰РµРµ Р±Р»СЋРґРѕ РёР»Рё 'bbb': ";
     }
 
 
-    //конец цикла 
+    //РєРѕРЅРµС† С†РёРєР»Р° 
 
 
     ofstream outFile("recipes.txt");
@@ -44,13 +44,13 @@ int main() {
         outFile << r.name << " " << r.calories << endl;
     }
     outFile.close();
-    cout << "\nРецепты сохранены в файл recipes.txt!" << endl;
+    cout << "\nР РµС†РµРїС‚С‹ СЃРѕС…СЂР°РЅРµРЅС‹ РІ С„Р°Р№Р» recipes.txt!" << endl;
 
-    cout << "\n--- Итоговый список ---" << endl;
+    cout << "\n--- РС‚РѕРіРѕРІС‹Р№ СЃРїРёСЃРѕРє ---" << endl;
     for (const auto& r : myRecipes) {
-        cout << r.name << " : " << r.calories << " ккал" << endl;
+        cout << r.name << " : " << r.calories << " РєРєР°Р»" << endl;
     }
 
     return 0;
 }
-// ПРОВЕРКА ГИТХАБА АЛЛО АЛЛО АЛЛО
+// РџР РћР’Р•Р РљРђ Р“РРўРҐРђР‘Рђ РђР›Р›Рћ РђР›Р›Рћ РђР›Р›Рћ
