@@ -3,6 +3,7 @@
 #include <string>
 #include <fstream>
 #include <locale.h> 
+#include <algorithm> 
 
 using namespace std;
 
@@ -20,6 +21,7 @@ void printMenu() {
     cout << "add    - добавить новый рецепт" << endl;
     cout << "del    - удалить рецепт" << endl;
     cout << "show   - показать все рецепты" << endl;
+    cout << "sort   - отсортировать по калорийности" << endl; 
     cout << "bb     - сохранить и выйти" << endl;
     cout << "===============================" << endl;
 }
@@ -39,6 +41,12 @@ int main() {
     inFile.close();
     cout << "Загружено " << myRecipes.size() << " рецептов." << endl;
 
+    // Вод дневного лимита калл
+    double limit = 0;
+    cout << "Введите дневной лимит калорий: ";
+    cin >> limit;
+    if (cin.fail()) { cin.clear(); cin.ignore(10000, '\n'); limit = 0; }
+
     printMenu(); // Показываем подсказку
 
     while (true) {
@@ -52,9 +60,15 @@ int main() {
             string name;
             double cal;
             cout << "Введите название блюда на англ: "; cin >> name;
-            cout << "Введите калорийность(цифры!): "; cin >> cal;
-            myRecipes.push_back(Recipe(name, cal));
-            cout << "Успешно добавлено!" << endl;
+            cout << "Введите калорийность(цифры!): ";
+            if (!(cin >> cal)) {
+                cout << "Ошибка: нужно ввести число!" << endl;
+                cin.clear(); cin.ignore(10000, '\n');
+            }
+            else {
+                myRecipes.push_back(Recipe(name, cal));
+                cout << "Успешно добавлено!" << endl;
+            }
         }
         else if (command == "show") {
             cout << "\nВаши рецепты:" << endl;
@@ -66,7 +80,20 @@ int main() {
             }
 
             cout << "-------------------------------" << endl;
-            cout << "Итого калорий: " << totalCalories << " ккал" << endl;
+            cout << "Итого калорий: " << totalCalories << "/" << limit << " ккал" << endl;
+
+            if (totalCalories > limit) {
+                cout << "Внимание: вы превысили лимит!" << endl;
+            }
+            else {
+                cout << "Осталось до лимита: " << limit - totalCalories << " ккал" << endl;
+            }
+        }
+        else if (command == "sort") {
+            sort(myRecipes.begin(), myRecipes.end(), [](const Recipe& a, const Recipe& b) {
+                return a.calories < b.calories;
+                });
+            cout << "Список отсортирован по возрастанию калорий!" << endl;
         }
         else if (command == "del") {
             cout << "Введите номер рецепта для удаления: ";
@@ -82,7 +109,7 @@ int main() {
         }
         else {
             cout << "Неизвестная команда. Попробуйте еще раз." << endl;
-            printMenu(); 
+            printMenu();
         }
     }
 
