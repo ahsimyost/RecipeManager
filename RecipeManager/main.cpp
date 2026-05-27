@@ -1,10 +1,9 @@
-п»ї#include <iostream>
+#include <iostream>
 #include <vector>
 #include <string>
 #include <fstream>
 
 using namespace std;
-// РљР»Р°СЃСЃ РґР»СЏ С…СЂР°РЅРµРЅРёСЏ РґР°РЅРЅС‹С… Рѕ Р±Р»СЋРґРµ 
 
 class Recipe {
 public:
@@ -13,44 +12,85 @@ public:
     Recipe(string n, double c) : name(n), calories(c) {}
 };
 
-//РєРѕРЅРµС†
-
+// простое меню
+void printMenu() {
+    cout << "\n===============================" << endl;
+    cout << "Доступные команды:" << endl;
+    cout << "add    - добавить новый рецепт" << endl;
+    cout << "del    - удалить рецепт" << endl;
+    cout << "show   - показать все рецепты" << endl;
+    cout << "bb     - сохранить и выйти" << endl;
+    cout << "===============================" << endl;
+}
 
 int main() {
     setlocale(LC_ALL, "Russian");
-
     vector<Recipe> myRecipes;
-    string name;
-    double cal;
 
-    cout << "--- РљР°Р»СЊРєСѓР»СЏС‚РѕСЂ РљР°Р»РѕСЂРёР№ ---" << endl;
-    cout << "\nР’РІРµРґРёС‚Рµ РЅР°Р·РІР°РЅРёРµ Р±Р»СЋРґР° (РёР»Рё РЅР°РїРёС€РёС‚Рµ 'bb' РґР»СЏ Р·Р°РІРµСЂС€РµРЅРёСЏ): ";
+    // достаем информацию  из файлов
+    ifstream inFile("recipes.txt");
+    string n;
+    double c;
+    while (inFile >> n >> c) {
+        myRecipes.push_back(Recipe(n, c));
+    }
+    inFile.close();
+    cout << "Загружено " << myRecipes.size() << " рецептов." << endl;
+
+    printMenu(); // Показываем подсказку
+
     while (true) {
-        cin >> name;
-        if (name == "bb") break; // bb РёР· С†РёРєР»Р°
+        string command;
+        cout << "\nВведите команду: ";
+        cin >> command;
 
-        cout << "Р’РІРµРґРёС‚Рµ РєР°Р»РѕСЂРёР№РЅРѕСЃС‚СЊ: ";
-        cin >> cal;
-        myRecipes.push_back(Recipe(name, cal));
-        cout << "\nР”РѕР±Р°РІР»РµРЅРѕ! Р’РІРµРґРёС‚Рµ СЃР»РµРґСѓСЋС‰РµРµ Р±Р»СЋРґРѕ РёР»Рё 'bbb': ";
+        if (command == "bb") break;
+
+        if (command == "add") {
+            string name;
+            double cal;
+            cout << "Введите название блюда: "; cin >> name;
+            cout << "Введите калорийность: "; cin >> cal;
+            myRecipes.push_back(Recipe(name, cal));
+            cout << "Успешно добавлено!" << endl;
+        }
+        else if (command == "show") {
+            cout << "\nВаши рецепты:" << endl;
+            double totalCalories = 0; // ---счетчик
+
+            for (size_t i = 0; i < myRecipes.size(); ++i) {
+                cout << i + 1 << ". " << myRecipes[i].name << " — " << myRecipes[i].calories << " ккал" << endl;
+                totalCalories += myRecipes[i].calories; // калькулируем калории
+            }
+
+            cout << "-------------------------------" << endl;
+            cout << "Итого калорий: " << totalCalories << " ккал" << endl;
+        }
+        else if (command == "del") {
+            cout << "Введите номер рецепта для удаления: ";
+            int index;
+            cin >> index;
+            if (index > 0 && index <= (int)myRecipes.size()) {
+                myRecipes.erase(myRecipes.begin() + index - 1);
+                cout << "Рецепт удален." << endl;
+            }
+            else {
+                cout << "Ошибка: такого номера нет в списке." << endl;
+            }
+        }
+        else {
+            cout << "Неизвестная команда. Попробуйте еще раз." << endl;
+            printMenu(); 
+        }
     }
 
-
-    //РєРѕРЅРµС† С†РёРєР»Р° 
-
-
+    // сохпранение рецептоав перед выходом
     ofstream outFile("recipes.txt");
     for (const auto& r : myRecipes) {
         outFile << r.name << " " << r.calories << endl;
     }
     outFile.close();
-    cout << "\nР РµС†РµРїС‚С‹ СЃРѕС…СЂР°РЅРµРЅС‹ РІ С„Р°Р№Р» recipes.txt!" << endl;
-
-    cout << "\n--- РС‚РѕРіРѕРІС‹Р№ СЃРїРёСЃРѕРє ---" << endl;
-    for (const auto& r : myRecipes) {
-        cout << r.name << " : " << r.calories << " РєРєР°Р»" << endl;
-    }
+    cout << "Данные сохранены. До свидания!" << endl;
 
     return 0;
 }
-// РџР РћР’Р•Р РљРђ Р“РРўРҐРђР‘Рђ РђР›Р›Рћ РђР›Р›Рћ РђР›Р›Рћ
