@@ -3,5 +3,5 @@
     <Platform Name="x64" />
     <Platform Name="x86" />
   </Configurations>
-  <Project Path="RecipeManager/RecipeManager.vcxproj" />
+  <Project Path="RecipeManager/RecipeManager.vcxproj" Id="0754a3f3-2b37-4e6e-8c38-8a1f91b112f3" />
 </Solution>

@@ -21,7 +21,7 @@ void printMenu() {
     cout << "add    - добавить новый рецепт" << endl;
     cout << "del    - удалить рецепт" << endl;
     cout << "show   - показать все рецепты" << endl;
-    cout << "sort   - отсортировать по калорийности" << endl; 
+    cout << "sort   - отсортировать по калорийности" << endl;
     cout << "bb     - сохранить и выйти" << endl;
     cout << "===============================" << endl;
 }
@@ -31,7 +31,7 @@ int main() {
     setlocale(LC_ALL, "Russian");
     vector<Recipe> myRecipes;
 
-    // достаем информацию  из файлов
+    // достаем информацию из файлов
     ifstream inFile("recipes.txt");
     string n;
     double c;
@@ -47,9 +47,10 @@ int main() {
     cin >> limit;
     if (cin.fail()) { cin.clear(); cin.ignore(10000, '\n'); limit = 0; }
 
-    printMenu(); // Показываем подсказку
-
     while (true) {
+        system("cls"); // Очищаем экранчик 
+        printMenu();
+
         string command;
         cout << "\nВведите команду: ";
         cin >> command;
@@ -69,6 +70,7 @@ int main() {
                 myRecipes.push_back(Recipe(name, cal));
                 cout << "Успешно добавлено!" << endl;
             }
+            cout << "\nНажмите Enter..."; cin.ignore(); cin.get();
         }
         else if (command == "show") {
             cout << "\nВаши рецепты:" << endl;
@@ -88,12 +90,14 @@ int main() {
             else {
                 cout << "Осталось до лимита: " << limit - totalCalories << " ккал" << endl;
             }
+            cout << "\nНажмите Enter..."; cin.ignore(); cin.get();
         }
         else if (command == "sort") {
             sort(myRecipes.begin(), myRecipes.end(), [](const Recipe& a, const Recipe& b) {
                 return a.calories < b.calories;
                 });
             cout << "Список отсортирован по возрастанию калорий!" << endl;
+            cout << "\nНажмите Enter..."; cin.ignore(); cin.get();
         }
         else if (command == "del") {
             cout << "Введите номер рецепта для удаления: ";
@@ -106,14 +110,15 @@ int main() {
             else {
                 cout << "Ошибка: такого номера нет в списке." << endl;
             }
+            cout << "\nНажмите Enter..."; cin.ignore(); cin.get();
         }
         else {
             cout << "Неизвестная команда. Попробуйте еще раз." << endl;
-            printMenu();
+            cout << "\nНажмите Enter..."; cin.ignore(); cin.get();
         }
     }
 
-    // сохранение рецептоав перед выходом
+    // сохранение рецептов перед выходом
     ofstream outFile("recipes.txt");
     for (const auto& r : myRecipes) {
         outFile << r.name << " " << r.calories << endl;

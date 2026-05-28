@@ -4,3 +4,4 @@ salad 180
 tea 30
 pizza 1500
 cheasecake 780
+karpoplya 12
