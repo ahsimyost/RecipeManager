@@ -1,4 +1,4 @@
-#include <iostream>
+п»ї#include <iostream>
 #include <vector>
 #include <string>
 #include <fstream>
@@ -14,15 +14,15 @@ public:
     Recipe(string n, double c) : name(n), calories(c) {}
 };
 
-// простое меню
+// РїСЂРѕСЃС‚РѕРµ РјРµРЅСЋ
 void printMenu() {
     cout << "\n===============================" << endl;
-    cout << "Доступные команды:" << endl;
-    cout << "add    - добавить новый рецепт" << endl;
-    cout << "del    - удалить рецепт" << endl;
-    cout << "show   - показать все рецепты" << endl;
-    cout << "sort   - отсортировать по калорийности" << endl;
-    cout << "bb     - сохранить и выйти" << endl;
+    cout << "Р”РѕСЃС‚СѓРїРЅС‹Рµ РєРѕРјР°РЅРґС‹:" << endl;
+    cout << "add    - РґРѕР±Р°РІРёС‚СЊ РЅРѕРІС‹Р№ СЂРµС†РµРїС‚" << endl;
+    cout << "del    - СѓРґР°Р»РёС‚СЊ СЂРµС†РµРїС‚" << endl;
+    cout << "show   - РїРѕРєР°Р·Р°С‚СЊ РІСЃРµ СЂРµС†РµРїС‚С‹" << endl;
+    cout << "sort   - РѕС‚СЃРѕСЂС‚РёСЂРѕРІР°С‚СЊ РїРѕ РєР°Р»РѕСЂРёР№РЅРѕСЃС‚Рё" << endl;
+    cout << "bb     - СЃРѕС…СЂР°РЅРёС‚СЊ Рё РІС‹Р№С‚Рё" << endl;
     cout << "===============================" << endl;
 }
 
@@ -31,7 +31,7 @@ int main() {
     setlocale(LC_ALL, "Russian");
     vector<Recipe> myRecipes;
 
-    // достаем информацию из файлов
+    // РґРѕСЃС‚Р°РµРј РёРЅС„РѕСЂРјР°С†РёСЋ РёР· С„Р°Р№Р»РѕРІ
     ifstream inFile("recipes.txt");
     string n;
     double c;
@@ -39,20 +39,20 @@ int main() {
         myRecipes.push_back(Recipe(n, c));
     }
     inFile.close();
-    cout << "Загружено " << myRecipes.size() << " рецептов." << endl;
+    cout << "Р—Р°РіСЂСѓР¶РµРЅРѕ " << myRecipes.size() << " СЂРµС†РµРїС‚РѕРІ." << endl;
 
-    // Вод дневного лимита калл
+    // Р’РѕРґ РґРЅРµРІРЅРѕРіРѕ Р»РёРјРёС‚Р° РєР°Р»Р»
     double limit = 0;
-    cout << "Введите дневной лимит калорий: ";
+    cout << "Р’РІРµРґРёС‚Рµ РґРЅРµРІРЅРѕР№ Р»РёРјРёС‚ РєР°Р»РѕСЂРёР№: ";
     cin >> limit;
     if (cin.fail()) { cin.clear(); cin.ignore(10000, '\n'); limit = 0; }
 
     while (true) {
-        system("cls"); // Очищаем экранчик 
+        system("cls"); // РћС‡РёС‰Р°РµРј СЌРєСЂР°РЅС‡РёРє 
         printMenu();
 
         string command;
-        cout << "\nВведите команду: ";
+        cout << "\nР’РІРµРґРёС‚Рµ РєРѕРјР°РЅРґСѓ: ";
         cin >> command;
 
         if (command == "bb") break;
@@ -60,71 +60,71 @@ int main() {
         if (command == "add") {
             string name;
             double cal;
-            cout << "Введите название блюда на англ: "; cin >> name;
-            cout << "Введите калорийность(цифры!): ";
+            cout << "Р’РІРµРґРёС‚Рµ РЅР°Р·РІР°РЅРёРµ Р±Р»СЋРґР° РЅР° Р°РЅРіР»: "; cin >> name;
+            cout << "Р’РІРµРґРёС‚Рµ РєР°Р»РѕСЂРёР№РЅРѕСЃС‚СЊ(С†РёС„СЂС‹!): ";
             if (!(cin >> cal)) {
-                cout << "Ошибка: нужно ввести число!" << endl;
+                cout << "РћС€РёР±РєР°: РЅСѓР¶РЅРѕ РІРІРµСЃС‚Рё С‡РёСЃР»Рѕ!" << endl;
                 cin.clear(); cin.ignore(10000, '\n');
             }
             else {
                 myRecipes.push_back(Recipe(name, cal));
-                cout << "Успешно добавлено!" << endl;
+                cout << "РЈСЃРїРµС€РЅРѕ РґРѕР±Р°РІР»РµРЅРѕ!" << endl;
             }
-            cout << "\nНажмите Enter..."; cin.ignore(); cin.get();
+            cout << "\nРќР°Р¶РјРёС‚Рµ Enter..."; cin.ignore(); cin.get();
         }
         else if (command == "show") {
-            cout << "\nВаши рецепты:" << endl;
-            double totalCalories = 0; // Переменная-счетчик
+            cout << "\nР’Р°С€Рё СЂРµС†РµРїС‚С‹:" << endl;
+            double totalCalories = 0; // РџРµСЂРµРјРµРЅРЅР°СЏ-СЃС‡РµС‚С‡РёРє
 
             for (size_t i = 0; i < myRecipes.size(); ++i) {
-                cout << i + 1 << ". " << myRecipes[i].name << " — " << myRecipes[i].calories << " ккал" << endl;
-                totalCalories += myRecipes[i].calories; // Складываем калории
+                cout << i + 1 << ". " << myRecipes[i].name << " вЂ” " << myRecipes[i].calories << " РєРєР°Р»" << endl;
+                totalCalories += myRecipes[i].calories; // РЎРєР»Р°РґС‹РІР°РµРј РєР°Р»РѕСЂРёРё
             }
 
             cout << "-------------------------------" << endl;
-            cout << "Итого калорий: " << totalCalories << "/" << limit << " ккал" << endl;
+            cout << "РС‚РѕРіРѕ РєР°Р»РѕСЂРёР№: " << totalCalories << "/" << limit << " РєРєР°Р»" << endl;
 
             if (totalCalories > limit) {
-                cout << "Внимание: вы превысили лимит!" << endl;
+                cout << "Р’РЅРёРјР°РЅРёРµ: РІС‹ РїСЂРµРІС‹СЃРёР»Рё Р»РёРјРёС‚!" << endl;
             }
             else {
-                cout << "Осталось до лимита: " << limit - totalCalories << " ккал" << endl;
+                cout << "РћСЃС‚Р°Р»РѕСЃСЊ РґРѕ Р»РёРјРёС‚Р°: " << limit - totalCalories << " РєРєР°Р»" << endl;
             }
-            cout << "\nНажмите Enter..."; cin.ignore(); cin.get();
+            cout << "\nРќР°Р¶РјРёС‚Рµ Enter..."; cin.ignore(); cin.get();
         }
         else if (command == "sort") {
             sort(myRecipes.begin(), myRecipes.end(), [](const Recipe& a, const Recipe& b) {
                 return a.calories < b.calories;
                 });
-            cout << "Список отсортирован по возрастанию калорий!" << endl;
-            cout << "\nНажмите Enter..."; cin.ignore(); cin.get();
+            cout << "РЎРїРёСЃРѕРє РѕС‚СЃРѕСЂС‚РёСЂРѕРІР°РЅ РїРѕ РІРѕР·СЂР°СЃС‚Р°РЅРёСЋ РєР°Р»РѕСЂРёР№!" << endl;
+            cout << "\nРќР°Р¶РјРёС‚Рµ Enter..."; cin.ignore(); cin.get();
         }
         else if (command == "del") {
-            cout << "Введите номер рецепта для удаления: ";
+            cout << "Р’РІРµРґРёС‚Рµ РЅРѕРјРµСЂ СЂРµС†РµРїС‚Р° РґР»СЏ СѓРґР°Р»РµРЅРёСЏ: ";
             int index;
             cin >> index;
             if (index > 0 && index <= (int)myRecipes.size()) {
                 myRecipes.erase(myRecipes.begin() + index - 1);
-                cout << "Рецепт удален." << endl;
+                cout << "Р РµС†РµРїС‚ СѓРґР°Р»РµРЅ." << endl;
             }
             else {
-                cout << "Ошибка: такого номера нет в списке." << endl;
+                cout << "РћС€РёР±РєР°: С‚Р°РєРѕРіРѕ РЅРѕРјРµСЂР° РЅРµС‚ РІ СЃРїРёСЃРєРµ." << endl;
             }
-            cout << "\nНажмите Enter..."; cin.ignore(); cin.get();
+            cout << "\nРќР°Р¶РјРёС‚Рµ Enter..."; cin.ignore(); cin.get();
         }
         else {
-            cout << "Неизвестная команда. Попробуйте еще раз." << endl;
-            cout << "\nНажмите Enter..."; cin.ignore(); cin.get();
+            cout << "РќРµРёР·РІРµСЃС‚РЅР°СЏ РєРѕРјР°РЅРґР°. РџРѕРїСЂРѕР±СѓР№С‚Рµ РµС‰Рµ СЂР°Р·." << endl;
+            cout << "\nРќР°Р¶РјРёС‚Рµ Enter..."; cin.ignore(); cin.get();
         }
     }
 
-    // сохранение рецептов перед выходом
+    // СЃРѕС…СЂР°РЅРµРЅРёРµ СЂРµС†РµРїС‚РѕРІ РїРµСЂРµРґ РІС‹С…РѕРґРѕРј
     ofstream outFile("recipes.txt");
     for (const auto& r : myRecipes) {
         outFile << r.name << " " << r.calories << endl;
     }
     outFile.close();
-    cout << "Данные сохранены. До свидания!" << endl;
+    cout << "Р”Р°РЅРЅС‹Рµ СЃРѕС…СЂР°РЅРµРЅС‹. Р”Рѕ СЃРІРёРґР°РЅРёСЏ!" << endl;
 
     return 0;
 }
